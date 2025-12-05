@@ -95,7 +95,7 @@ export default function BDPage() {
             <div className="detail-box">
                 <div className="detail-left">
                     {item.coverImageUrl ? (
-                        <img src={item.coverImageUrl} alt="작품 이미지" />
+                        <img src={item.coverImageUrl} alt="작품 이미지" className = "detail-img"/>
                     ) : (
                         "작품이미지"
                     )}

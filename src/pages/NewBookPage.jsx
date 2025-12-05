@@ -1,87 +1,107 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/NewBookPage.css";
+import axios from "axios"; // 🔹 axios import 추가
 
 export default function NewBookPage() {
 
-  const navigate = useNavigate(); //취소시 메인페이지
+    const navigate = useNavigate(); // 취소 시 메인으로 이동
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
-  const submitbook = () => {
-    // 제목 확인
-    if (title.trim() === "") {
-      alert("제목 입력");
-      return;
-    }
-    //책 정보 입력
-    const newbook_load = {
-      id: Date.now(),
-      title: title,
-      content: content,
-      img: null
+    // 🔹 등록 버튼 클릭 시 수행할 함수
+    const submitbook = async () => {
+        // 1. 제목 유효성 검사
+        if (title.trim() === "") {
+            alert("제목 입력");
+            return;
+        }
+
+        // 2. 백엔드로 보낼 데이터 (DTO 느낌)
+        //    👉 백엔드에서 사용하는 필드명에 맞춰야 함!
+        const requestBody = {
+            title: title,
+            content: content,
+            // 예시: 백엔드에서 coverImageUrl 같은 필드를 쓴다면
+            // coverImageUrl: null
+        };
+
+        try {
+            // 3. axios.post로 서버에 전송
+            // const response = await axios.post(
+            //     "http://localhost:8080/api/books", // 🔹 백엔드 엔드포인트
+            //     requestBody
+            // );
+            //
+            // // 필요하면 response.data로 저장된 책 정보 확인 가능
+            // console.log("서버에서 돌아온 데이터:", response.data);
+            const response = await fetch("http://localhost:8080/api/books",{
+                method: "POST",body: JSON.stringify(requestBody)
+            });
+            const data = await response.json();
+            console.log(data);
+            alert("등록 완료!");
+
+            // 4. 메인 페이지로 이동
+            navigate("/");
+
+        } catch (error) {
+            console.error("등록 중 오류:", error);
+            alert("등록 중 오류가 발생했습니다.");
+        }
     };
-    // 작품 목록 가져오기
-    const saved = JSON.parse(localStorage.getItem("items")) || [];
 
-    //데이터 저장
-    localStorage.setItem("items", JSON.stringify([...saved, newbook_load]));
+    return (
+        <div className="register-container">
+            {/* 상단 배너 */}
+            <div className="register-banner">
+                <h2>신규 도서 등록</h2>
+                <p>새로운 도서 정보 입력</p>
+            </div>
 
-    alert("등록 완료!");
+            {/* 본문 */}
+            <div className="register-box">
+                {/* 이미지 업로드 영역 (나중에 파일 업로드 붙일 자리) */}
+                <div className="image-area">
+                    작품이미지
+                </div>
 
-    // 메인페이지로 이동
-    navigate("/");
+                {/* 입력 영역 */}
+                <div className="input-area">
+                    <label className="label">도서 제목</label>
+                    <input
+                        type="text"
+                        className="input-title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
 
-  }
+                    <label className="label">도서 설명</label>
+                    <textarea
+                        className="input-content"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                    />
+                </div>
+            </div>
 
-  return (
-      <div className="register-container">
-        {/* 상단 배너 */}
-        <div className="register-banner">
-          <h2>신규 도서 등록</h2>
-          <p>새로운 도서 정보 입력</p>
+            {/* 하단 버튼 */}
+            <div className="btn-area">
+                <button
+                    className="cancel-btn"
+                    onClick={() => navigate("/")}
+                >
+                    취소
+                </button>
+
+                <button
+                    className="submit-btn"
+                    onClick={submitbook} // 🔹 axios.post 호출하는 함수 연결
+                >
+                    등록
+                </button>
+            </div>
         </div>
-
-        {/* 본문 */}
-        <div className="register-box">
-          {/* 이미지 업로드 영역 */}
-          <div className="image-area">
-            작품이미지
-          </div>
-
-          {/* 입력 영역 */}
-          <div className="input-area">
-            <label className="label">도서 제목</label>
-            <input
-                type="text"
-                className="input-title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-
-            <label className="label">도서 설명</label>
-            <textarea
-                className="input-content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* 하단 버튼 */}
-        <div className="btn-area">
-          <button className="cancel-btn"
-                  onClick={() => navigate("/")}>
-            취소
-          </button>
-
-
-          <button className="submit-btn"
-                  onClick={submitbook}>
-            등록
-          </button>
-        </div>
-      </div>
-  );
+    );
 }
