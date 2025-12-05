@@ -60,19 +60,26 @@ export default function MainPage() {
             </div>
 
             {/* 카드 리스트 */}
-            {/* 카드 리스트 */}
             <div className="card-row">
-                {currentItems.map(item => (
-                    <div
-                        className="card"
-                        key={item.bookId}
-                        onClick={() => navigate(`/detail/${item.bookId}`)}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <img src={item.coverImageUrl} alt="작품이미지" className="card-img" />
-                        <div className="title">{item.title}</div>
+                {currentItems.length <= 1 ? (
+                    <div className="card">
+                        <div>등록된 작품이 없습니다.</div>
+                        <button
+                            className="register-btn"
+                            onClick={() => navigate("/register")}
+                        >
+                            작품 등록하기
+                        </button>
                     </div>
-                ))}
+                ) : (
+                    currentItems.map(item => (
+
+                        <div className="card" key={item.bookId}>
+                            <img src={item.coverImageUrl} alt="작품이미지" className="card-img" />
+                            <div className="title">{item.title}</div>
+                        </div>
+                    ))
+                )}
             </div>
             <div className="pagination">
                 {Array.from({length: totalPages}, (_, i) => (
