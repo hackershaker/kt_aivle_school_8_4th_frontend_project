@@ -42,7 +42,10 @@ export default function MainPage() {
         {/* 카드 리스트 */}
         <div className="card-row">
           {currentItems.map(item => (
-              <div className="card" key={item.id}>
+              <div className="card" key={item.id}
+                   // onClick={() => navigate(`/detail/${item.id}`)}
+                   // style={{cursor: "pointer"}}
+                  >
                 <img src={item.img} alt="작품이미지" className="card-img"/>
                 <div className="title">{item.title}</div>
               </div>
@@ -59,6 +62,11 @@ export default function MainPage() {
                     </span>
           ))}
         </div>
+          {/* 테스트용 나중에 지우기 */}
+          <button onClick={() => navigate("/detail/999")}>
+              상세보기 테스트
+          </button>
+
       </div>
   );
 }
