@@ -73,6 +73,10 @@ export default function RevisePage() {
 
         fetchBookData();
     }, [id, bookData, navigate]);
+
+    const handleCancel = () => {
+        navigate('/');
+    };
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -82,10 +86,6 @@ export default function RevisePage() {
         // 추후 서버로 보낼 원본 파일 저장
 
     };
-    const handleCancel = () => {
-        navigate('/');
-    };
-
     const handleSubmit = async () => {
         try {
             await axios.put(`http://localhost:8080/api/books/${id}`, {
@@ -180,6 +180,7 @@ export default function RevisePage() {
                     </Box>
                     <Button
                         variant="contained"
+                        component="label"
 
                         sx={{
                             mt: 3,
