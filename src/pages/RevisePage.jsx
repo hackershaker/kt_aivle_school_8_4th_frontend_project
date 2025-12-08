@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/NewBookPage.css";
+import "../styles/RevisePage.css";
 
 export default function RevisePage() {
 
@@ -12,7 +13,6 @@ export default function RevisePage() {
             {/* 상단 배너 */}
             <div className="register-banner">
                 <h2>도서 정보 수정</h2>
-                <p>내용을 변경하고 저장하세요</p>
             </div>
 
             {/* 본문 박스 */}
