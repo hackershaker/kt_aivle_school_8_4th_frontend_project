@@ -12,7 +12,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import { BookOutlined, Refresh as RefreshIcon } from "@mui/icons-material";
+import { Refresh as RefreshIcon } from "@mui/icons-material";
 
 /**
  * NewBookPageMUI.jsx
@@ -38,7 +38,6 @@ export default function NewBookPageMUI() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [coverPreview, setCoverPreview] = useState(null); // local preview or generated URL
-    const [id,setId] = useState(null);
     // UI state
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -95,8 +94,7 @@ export default function NewBookPageMUI() {
             // navigate to update cover page as previously
             //navigate(`/detail/${data.bookId}/updateCover`);
             if(data.coverImageUrl == null) {
-                setId(data.bookId);
-                navigate(`/detail/${id}/updateCover`,{state:{id: id , content:content}});
+                navigate(`/detail/${data.bookId}/updateCover`);
             }else{
                 navigate(`/`);
             }
