@@ -55,7 +55,7 @@
 ## 각 페이지별 주소 
   기본 주소 : http://localhost:5173
   주소                         |    페이지
-  =====================================================
+  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   /                            |  MainPage.jsx
   /detail/{bookID}             |  BDPage.jsx
   /edit/{bookID}               |  RevisePage.jsx
