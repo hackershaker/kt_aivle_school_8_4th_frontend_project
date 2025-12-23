@@ -76,7 +76,7 @@ export default function NewBookPageMUI() {
     try {
       console.log(coverPreview)
 
-      const response = await fetch("$BACKEND_APP_URL/books", {
+      const response = await fetch("api/books", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(requestBody)
