@@ -23,7 +23,7 @@ export default function BDPage() {
     const fetchBookDetail = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`api/books/${id}`);
+        const response = await axios.get(`/api/books/${id}`);
         setItem(response.data);
       } catch (err) {
         console.error(err);
@@ -87,7 +87,7 @@ export default function BDPage() {
     }
 
     try {
-      await axios.delete(`api/books/${id}`);
+      await axios.delete(`/api/books/${id}`);
       alert("삭제되었습니다.");
       navigate("/");
     } catch (err) {
